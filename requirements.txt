@@ -1,1 +1,3 @@
-# No external dependencies required for this project
+Flask
+selenium
+webdriver_manager

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Except Self</title>
+</head>
+<body>
+    <h1>Product Except Self</h1>
+    <form id="productForm">
+        <label for="nums">Enter numbers (comma-separated):</label>
+        <input type="text" id="nums" name="nums" required>
+        <button type="submit">Submit</button>
+    </form>
+    <h2 id="result"></h2>
+    <script>
+        document.getElementById('productForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const nums = document.getElementById('nums').value;
+            fetch('/product_except_self', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `nums=${nums}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    document.getElementById('result').textContent = `Error: ${data.error}`;
+                    document.getElementById('result').style.color = 'red';
+                } else {
+                    document.getElementById('result').textContent = `Result: ${data.result.join(', ')}`;
+                    document.getElementById('result').style.color = 'black';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
